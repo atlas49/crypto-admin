@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Avalanche",
+    "code": "AVAX",
+    "inBTC": ""
+  },
+  {
+    "name": "Bitcoin Cash",
+    "code": "BCH",
+    "inBTC": ""
+  },
+  {
+    "name": "Binance Coin",
+    "code": "BNB",
+    "inBTC": ""
+  },
+  {
+    "name": "Bitcoin",
+    "code": "BTC",
+    "inBTC": ""
+  },
+  {
+    "name": "Dai",
+    "code": "DAI",
+    "inBTC": ""
+  },
+  {
+    "name": "Dash",
+    "code": "DASH",
+    "inBTC": ""
+  },
+  {
+    "name": "Dogecoin",
+    "code": "DOGE",
+    "inBTC": ""
+  },
+  {
+    "name": "Pollkadot",
+    "code": "DOT",
+    "inBTC": ""
+  },
+  {
+    "name": "Ethereum",
+    "code": "ETH",
+    "inBTC": ""
+  },
+  {
+    "name": "Litecoin",
+    "code": "LTC",
+    "inBTC": ""
+  },
+  {
+    "name": "Terra",
+    "code": "LUNA",
+    "inBTC": ""
+  },
+  {
+    "name": "Polygon",
+    "code": "MATIC",
+    "inBTC": ""
+  },
+  {
+    "name": "Solana",
+    "code": "SOL",
+    "inBTC": ""
+  },
+  {
+    "name": "Tron",
+    "code": "TRX",
+    "inBTC": ""
+  },
+  {
+    "name": "Uniswap",
+    "code": "UNI",
+    "inBTC": ""
+  },
+  {
+    "name": "Stellar",
+    "code": "XLM",
+    "inBTC": ""
+  },
+  {
+    "name": "Ripple",
+    "code": "XRP",
+    "inBTC": ""
+  },
+  {
+    "name": "Tezos",
+    "code": "XTZ",
+    "inBTC": ""
+  }
+]
