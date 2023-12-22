@@ -8,7 +8,12 @@ const MainPage = () => {
 		"code": string
 	}[]>([])
 
-	const [transactions, setTransactions] = useState<[]>([])
+	const [transactions, setTransactions] = useState<{
+		"email": string,
+		"wallet": string,
+		"from": { code: string }
+		"to": { code: string }
+	}[]>([])
 
 	const db = useDatabase();
 
