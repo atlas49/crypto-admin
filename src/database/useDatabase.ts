@@ -1,29 +1,33 @@
 import db from '../database';
-import { DocumentData, QuerySnapshot, addDoc, collection, deleteDoc, getDocs, query, where, } from 'firebase/firestore';
-
-const extractData = (querySnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
-	const data: DocumentData = [];
-
-	querySnapshot.forEach((doc) => {
-		if (doc.data()) {
-			data.push(doc.data());
-		}
-	});
-
-	return data;
-};
-
+import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where, } from 'firebase/firestore';
 
 const getDataFromDB = async (collectionName: string) => {
 	const q = query(collection(db, collectionName));
-
 	const querySnapshot = await getDocs(q);
-	const data = extractData(querySnapshot) as [];
-	return data;
+
+	const data = querySnapshot.docs.map((doc) => {
+		return {
+			id: doc.id,
+			...doc.data(),
+		};
+	});
+
+	return data as any;
 }
 
 const setDataToDB = async (collectionName: string, data: any) => {
 	await addDoc(collection(db, collectionName), data);
+}
+
+const updateData = async (updatedData: any, collectionName: string, documentId: string) => {
+	const docRef = doc(collection(db, collectionName), documentId);
+	updateDoc(docRef, updatedData)
+		.then(() => {
+			console.log('Document successfully updated!');
+		})
+		.catch((error) => {
+			console.error('Error updating document: ', error);
+		});
 }
 
 
@@ -50,7 +54,7 @@ const useDatabase = () => {
 	const setData = async (collectionName: string, data: any) => setDataToDB(collectionName, data);
 	const deleteData = async (collectionName: string, fieldName: string, valueToDelete: string) => deleteDocuments(collectionName, fieldName, valueToDelete);
 
-	return { getData, setData, deleteData }
+	return { getData, setData, deleteData, updateData }
 }
 
 export default useDatabase;

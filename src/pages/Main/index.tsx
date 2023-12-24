@@ -1,75 +1,47 @@
 import { useEffect, useState } from "react";
+import TransactionsTable from "./tabels/TransactionsTable";
 import useDatabase from "../../database/useDatabase"
+import CurrenciesTable from "./tabels/CurrenciesTable";
 
 const MainPage = () => {
-	const [currencies, setCurrencies] = useState<{
-		"name": string,
-		"inBTC": string,
-		"code": string
-	}[]>([])
+  const [currencies, setCurrencies] = useState<{
+    name: string,
+    inBTC: string,
+    code: string,
+    id: string
+  }[]>([])
 
-	const [transactions, setTransactions] = useState<{
-		"email": string,
-		"wallet": string,
-		"from": { code: string }
-		"to": { code: string }
-	}[]>([])
+  const [transactions, setTransactions] = useState<{
+    id: string,
+    email: string,
+    wallet: string,
+    from: { code: string }
+    to: { code: string }
+  }[]>([])
 
-	const db = useDatabase();
+  const db = useDatabase();
 
-	useEffect(() => {
+  useEffect(() => {
 
-		db.getData('currencies').then(data => {
-			setCurrencies(data);
-		})
+    db.getData('currencies').then(data => {
+      console.log(data);
 
-		db.getData('transactions').then(data => {
-			setTransactions(data);
-		})
-	}, [])
+      setCurrencies(data);
+    })
 
-	return <div>
-		<p>Currencies</p>
-		<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>In BTC</th>
-					<th>Code</th>
-				</tr>
-			</thead>
-			<tbody>
-				{currencies.map(curr =>
-					<tr>
-						<td>{curr.name}</td>
-						<td>{curr.inBTC}</td>
-						<td>{curr.code}</td>
-					</tr>
-				)}
-			</tbody>
-		</table>
-		<p>Transactions</p>
-		<table>
-			<thead>
-				<tr>
-					<th>email</th>
-					<th>wallet</th>
-					<th>from</th>
-					<th>to</th>
-				</tr>
-			</thead>
-			<tbody>
-				{transactions.map(curr =>
-					<tr>
-						<td>{curr.email}</td>
-						<td>{curr.wallet}</td>
-						<td>{curr.from.code}</td>
-						<td>{curr.to.code}</td>
-					</tr>
-				)}
-			</tbody>
-		</table>
-	</div>
+    db.getData('transactions').then(data => {
+      setTransactions(data);
+    })
+  }, [])
+
+  return <div>
+    <p>Currencies</p>
+    <CurrenciesTable currencies={currencies} />
+    <p>Transactions</p>
+
+    <TransactionsTable transactions={transactions} />
+
+  </div>
 }
 
 export default MainPage
