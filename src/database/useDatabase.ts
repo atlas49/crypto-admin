@@ -16,9 +16,20 @@ const getDataFromDB = async (collectionName: string) => {
 }
 
 const setDataToDB = async (collectionName: string, data: any) => {
-	await addDoc(collection(db, collectionName), data);
+	const docRef = await addDoc(collection(db, collectionName), data);
+	return docRef.id
 }
 
+const deleteById = async (collectionName: string, documentId: string) => {
+	const documentRef = doc(db, collectionName, documentId);
+	deleteDoc(documentRef)
+		.then(() => {
+			console.log('Document successfully deleted!');
+		})
+		.catch((error) => {
+			console.error('Error removing document: ', error);
+		});
+}
 const updateData = async (updatedData: any, collectionName: string, documentId: string) => {
 	const docRef = doc(collection(db, collectionName), documentId);
 	updateDoc(docRef, updatedData)
@@ -54,7 +65,7 @@ const useDatabase = () => {
 	const setData = async (collectionName: string, data: any) => setDataToDB(collectionName, data);
 	const deleteData = async (collectionName: string, fieldName: string, valueToDelete: string) => deleteDocuments(collectionName, fieldName, valueToDelete);
 
-	return { getData, setData, deleteData, updateData }
+	return { getData, setData, deleteData, updateData, deleteById }
 }
 
 export default useDatabase;

@@ -16,7 +16,10 @@ interface TableState extends Currency {
 }
 
 interface ICurrenciesTable {
-	currencies: Currency[]
+	currencies: Currency[],
+	addCurrencies: () => void,
+	removeCurrencies: (id: string) => void
+
 }
 
 const CurrenciesTable = (props: ICurrenciesTable) => {
@@ -38,20 +41,14 @@ const CurrenciesTable = (props: ICurrenciesTable) => {
 
 	const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>, i: number, prop: CurrencyEnum) => {
 		const newTableState = [...tableState];
-
 		newTableState[i][prop] = event.target.value;
-
 		setTableState(newTableState)
-
 	}
 
 
 	useEffect(() => {
 		const initArr: TableState[] = [...props.currencies].map((el) => ({ ...el, isUpdating: false, newState: null }))
-
-
 		setTableState(initArr)
-
 	}, [props.currencies])
 
 	return <table>
@@ -69,9 +66,10 @@ const CurrenciesTable = (props: ICurrenciesTable) => {
 					<td style={{ width: '20%' }}>{tableState[i]?.isUpdating ? <input onChange={(e) => { onChangeInput(e, i, 'name') }} value={tableState[i].name} /> : curr.name}</td>
 					<td style={{ width: '20%' }}>{tableState[i]?.isUpdating ? <input onChange={(e) => { onChangeInput(e, i, 'inBTC') }} value={tableState[i].inBTC} /> : curr.inBTC}</td>
 					<td style={{ width: '20%' }}>{tableState[i]?.isUpdating ? <input onChange={(e) => { onChangeInput(e, i, 'code') }} value={tableState[i].code} /> : curr.code}</td>
-					<td><button onClick={() => { update(i) }}>{tableState[i]?.isUpdating ? "Save" : "Update"}</button></td>
+					<td><button onClick={() => { update(i) }}>{tableState[i]?.isUpdating ? "Save" : "Update"}</button> <button onClick={() => props.removeCurrencies(curr.id)}>Remove</button></td>
 				</tr>
 			)}
+			<tr><button onClick={() => props.addCurrencies()}>Add</button></tr>
 		</tbody>
 	</table>
 }
